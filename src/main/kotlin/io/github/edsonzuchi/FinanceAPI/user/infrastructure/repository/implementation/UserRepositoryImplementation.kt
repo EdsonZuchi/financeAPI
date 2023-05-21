@@ -2,6 +2,7 @@ package io.github.edsonzuchi.FinanceAPI.user.infrastructure.repository.implement
 
 import io.github.edsonzuchi.FinanceAPI.user.domain.entity.User
 import io.github.edsonzuchi.FinanceAPI.user.domain.repository.UserRepository
+import io.github.edsonzuchi.FinanceAPI.user.infrastructure.repository.database.AccountDatabase
 import io.github.edsonzuchi.FinanceAPI.user.infrastructure.repository.database.UserDatabase
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.select
