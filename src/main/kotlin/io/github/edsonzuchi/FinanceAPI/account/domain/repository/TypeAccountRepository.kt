@@ -9,4 +9,5 @@ interface TypeAccountRepository {
     fun addType(typeAccount: TypeAccount)
     fun findByUUID(uuid: UUID): TypeAccount?
     fun deleteType(uuid: UUID)
+    fun updateType(uuid: UUID, typeAccount: TypeAccount)
 }

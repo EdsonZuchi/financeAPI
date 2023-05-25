@@ -29,4 +29,12 @@ class AccountService(
     fun removeType(@PathVariable uuid: UUID?): TypeAccountResponse{
         return typeAccountUseCase.removeType(uuid);
     }
+
+    @PutMapping("/type/{uuid}")
+    fun updateDescriptionType(@PathVariable uuid: UUID?,
+                              @RequestBody typeAccount: TypeAccount?
+                             ): TypeAccountResponse{
+        return typeAccountUseCase.updateType(uuid, typeAccount);
+    }
+
 }

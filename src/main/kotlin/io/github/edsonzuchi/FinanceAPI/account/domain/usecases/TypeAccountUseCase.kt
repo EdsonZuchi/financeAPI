@@ -10,4 +10,5 @@ interface TypeAccountUseCase {
     fun getAllTypes(): ListTypeAccountResponse
     fun addType(typeAccount: TypeAccount?): TypeAccountResponse
     fun removeType(uuid: UUID?): TypeAccountResponse
+    fun updateType(uuid: UUID?, typeAccount: TypeAccount?): TypeAccountResponse
 }

@@ -68,4 +68,26 @@ class TypeAccountUseCaseImplementation(
             TypeAccountResponse(error = ACCOUNT_TYPE_ERROR_DATABASE)
         }
     }
+
+    override fun updateType(uuid: UUID?, typeAccount: TypeAccount?): TypeAccountResponse {
+        return try {
+            if(uuid == null){
+                return TypeAccountResponse(error = ACCOUNT_TYPE_UUID_NULL)
+            }
+            if(typeAccount == null) {
+                return TypeAccountResponse(error = ACCOUNT_TYPE_NOT_FOUND)
+            }
+            if(typeAccountRepository.findByUUID(uuid) == null){
+                return TypeAccountResponse(error = ACCOUNT_TYPE_NOT_FOUND)
+            }
+            if(typeAccount.description == null){
+                return TypeAccountResponse(error = ACCOUNT_TYPE_DESCRIPTION_NULL)
+            }
+            typeAccountRepository.updateType(uuid, typeAccount);
+            TypeAccountResponse(error = null)
+        }catch (e: Exception){
+            print(e)
+            TypeAccountResponse(error = ACCOUNT_TYPE_ERROR_DATABASE)
+        }
+    }
 }

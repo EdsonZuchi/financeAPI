@@ -3,11 +3,8 @@ package io.github.edsonzuchi.FinanceAPI.account.infrastructure.repository.implem
 import TypeAccountDatabase
 import io.github.edsonzuchi.FinanceAPI.account.domain.entity.TypeAccount
 import io.github.edsonzuchi.FinanceAPI.account.domain.repository.TypeAccountRepository
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.stereotype.Repository
 import java.util.*
@@ -59,6 +56,17 @@ class TypeAccountRepositoryImplementation(): TypeAccountRepository{
                 .deleteWhere {
                     TypeAccountDatabase.uuid eq uuid
                 }
+        }
+    }
+
+    override fun updateType(uuid: UUID, typeAccount: TypeAccount) {
+        transaction {
+            TypeAccountDatabase
+               .update ({
+                   TypeAccountDatabase.uuid eq uuid
+               }){
+                   it[TypeAccountDatabase.description] = typeAccount.description!!
+               }
         }
     }
 }
