@@ -45,6 +45,57 @@ class AccountRepositoryImplementation(): AccountRepository {
         }
     }
 
+    override fun findAll(userUUID: UUID): List<Account> {
+        return transaction {
+            AccountDatabase
+                .innerJoin(UserDatabase, {UserDatabase.uuid}, {AccountDatabase.userUUID})
+                .innerJoin(BankDatabase, {BankDatabase.uuid}, {AccountDatabase.bankUUID})
+                .innerJoin(TypeAccountDatabase, {TypeAccountDatabase.uuid}, {AccountDatabase.typeAccountUUID})
+                .select(
+                    AccountDatabase.userUUID eq userUUID
+                )
+                .map {
+                    Account(
+                        uuid = it[AccountDatabase.uuid],
+                        name = it[AccountDatabase.name],
+                        balance = it[AccountDatabase.balance],
+                        active = it[AccountDatabase.active],
+                        modifiedAt = it[AccountDatabase.modifiedAt],
+                        createdAt = it[AccountDatabase.createdAt],
+                        user = it.toUser(),
+                        bank = it.toBank(),
+                        typeAccount = it.toTypeAccount()
+                    )
+                }
+        }
+    }
+
+    override fun findByUUID(uuid: UUID): Account? {
+        return transaction {
+            AccountDatabase
+                .innerJoin(UserDatabase, {UserDatabase.uuid}, {AccountDatabase.userUUID})
+                .innerJoin(BankDatabase, {BankDatabase.uuid}, {AccountDatabase.bankUUID})
+                .innerJoin(TypeAccountDatabase, {TypeAccountDatabase.uuid}, {AccountDatabase.typeAccountUUID})
+                .select(
+                    AccountDatabase.uuid eq uuid
+                )
+                .map {
+                    Account(
+                        uuid = it[AccountDatabase.uuid],
+                        name = it[AccountDatabase.name],
+                        balance = it[AccountDatabase.balance],
+                        active = it[AccountDatabase.active],
+                        modifiedAt = it[AccountDatabase.modifiedAt],
+                        createdAt = it[AccountDatabase.createdAt],
+                        user = it.toUser(),
+                        bank = it.toBank(),
+                        typeAccount = it.toTypeAccount()
+                    )
+                }
+                .firstOrNull()
+        }
+    }
+
     fun ResultRow.toUser(): User {
         return User(
             uuid = this[UserDatabase.uuid],
