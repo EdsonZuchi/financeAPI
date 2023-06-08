@@ -8,4 +8,5 @@ interface AccountRepository {
     fun findByType(uuidType: UUID): List<Account>
     fun findAll(userUUID: UUID): List<Account>
     fun findByUUID(uuid: UUID): Account?
+    fun addAccount(account: Account): Account
 }

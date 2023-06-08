@@ -12,6 +12,7 @@ import io.github.edsonzuchi.FinanceAPI.user.infrastructure.repository.database.U
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.innerJoin
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.stereotype.Repository
@@ -94,6 +95,22 @@ class AccountRepositoryImplementation(): AccountRepository {
                 }
                 .firstOrNull()
         }
+    }
+
+    override fun addAccount(account: Account): Account {
+        transaction {
+            AccountDatabase
+                .insert {
+                    it[AccountDatabase.uuid] = account.uuid!!
+                    it[AccountDatabase.name] = account.name!!
+                    it[AccountDatabase.balance] = account.balance!!
+                    it[AccountDatabase.active] = "S"
+                    it[AccountDatabase.userUUID] = account.user!!.uuid!!
+                    it[AccountDatabase.bankUUID] = account.bank!!.uuid!!
+                    it[AccountDatabase.typeAccountUUID] = account.typeAccount!!.uuid!!
+                }
+        }
+        return findByUUID(account.uuid!!)!!
     }
 
     fun ResultRow.toUser(): User {

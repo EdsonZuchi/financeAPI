@@ -6,6 +6,14 @@ val ACCOUNT_NOT_FOUND = AccountException("ACCOUNT_NOT_FOUND", "Account not found
 
 val ACCOUNT_NULL = AccountException("ACCOUNT_NULL", "Account is null")
 
+val ACCOUNT_NAME_NULL = AccountException("ACCOUNT_NAME_NULL", "Account name is null")
+
+val ACCOUNT_USER_NULL = AccountException("ACCOUNT_USER_NULL", "Account user is null")
+
+val ACCOUNT_TYPE_NULL = AccountException("ACCOUNT_TYPE_NULL", "Account type is null")
+
+val ACCOUNT_BANK_NULL = AccountException("ACCOUNT_BANK_NULL", "Account bank is null")
+
 val ACCOUNT_NOT_USER = AccountException("ACCOUNT_NOT_USER", "Account does not belong to the user")
 
 val ACCOUNT_ERROR_DATABASE = AccountException("ACCOUNT_ERROR_DATABASE", "Error account database")

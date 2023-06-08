@@ -1,15 +1,14 @@
 package io.github.edsonzuchi.FinanceAPI.account.domain.usecases.implementation
 
-import io.github.edsonzuchi.FinanceAPI.account.domain.exceptions.ACCOUNT_ERROR_DATABASE
-import io.github.edsonzuchi.FinanceAPI.account.domain.exceptions.ACCOUNT_NOT_FOUND
-import io.github.edsonzuchi.FinanceAPI.account.domain.exceptions.ACCOUNT_NOT_USER
-import io.github.edsonzuchi.FinanceAPI.account.domain.exceptions.ACCOUNT_NULL
+import io.github.edsonzuchi.FinanceAPI.account.domain.entity.Account
+import io.github.edsonzuchi.FinanceAPI.account.domain.exceptions.*
 import io.github.edsonzuchi.FinanceAPI.account.domain.repository.AccountRepository
 import io.github.edsonzuchi.FinanceAPI.account.domain.usecases.AccountUseCase
 import io.github.edsonzuchi.FinanceAPI.account.domain.usecases.response.AccountResponse
 import io.github.edsonzuchi.FinanceAPI.account.domain.usecases.response.ListAccountResponse
 import io.github.edsonzuchi.FinanceAPI.user.domain.exceptions.USER_NULL
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
 import java.util.*
 
 @Service
@@ -42,6 +41,34 @@ class AccountUseCaseImplementation(
                 return AccountResponse(error = ACCOUNT_NOT_USER)
             }
             AccountResponse(account = account)
+        }catch (e: Exception){
+            print(e)
+            AccountResponse(error = ACCOUNT_ERROR_DATABASE)
+        }
+    }
+
+    override fun registerAccount(account: Account?): AccountResponse {
+        if(account == null){
+            return AccountResponse(error = ACCOUNT_NULL)
+        }
+        return try {
+            if(account.name == null){
+                return AccountResponse(error = ACCOUNT_NAME_NULL)
+            }
+            if(account.user!!.uuid == null){
+                return AccountResponse(error = ACCOUNT_NAME_NULL)
+            }
+            if(account.bank!!.uuid == null){
+                return AccountResponse(error = ACCOUNT_NAME_NULL)
+            }
+            if(account.typeAccount!!.uuid == null){
+                return AccountResponse(error = ACCOUNT_NAME_NULL)
+            }
+            account.uuid = UUID.randomUUID();
+            if(account.balance == null){
+                account.balance = BigDecimal.valueOf(0);
+            }
+            AccountResponse(account = accountRepository.addAccount(account));
         }catch (e: Exception){
             print(e)
             AccountResponse(error = ACCOUNT_ERROR_DATABASE)

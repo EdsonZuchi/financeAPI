@@ -30,6 +30,11 @@ class AccountService(
         return accountUseCase.listAccount(uuid, userUUID);
     }
 
+    @PostMapping
+    fun registerAccount(@RequestBody account: Account): AccountResponse{
+        return accountUseCase.registerAccount(account)
+    }
+
     @GetMapping("/type")
     fun listAllTypes(): ListTypeAccountResponse{
         return typeAccountUseCase.getAllTypes();
