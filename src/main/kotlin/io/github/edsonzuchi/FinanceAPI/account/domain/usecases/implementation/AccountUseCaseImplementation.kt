@@ -66,7 +66,7 @@ class AccountUseCaseImplementation(
             }
             account.uuid = UUID.randomUUID();
             if(account.balance == null){
-                account.balance = BigDecimal.valueOf(0);
+                account.balance = 0.0;
             }
             AccountResponse(account = accountRepository.addAccount(account));
         }catch (e: Exception){

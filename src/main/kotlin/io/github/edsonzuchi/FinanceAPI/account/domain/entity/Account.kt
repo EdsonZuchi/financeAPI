@@ -9,7 +9,7 @@ import java.util.UUID
 class Account(
     var uuid: UUID? = null,
     var name: String? = null,
-    var balance: BigDecimal? = null,
+    var balance: Double? = null,
     var active: String? = null,
     var modifiedAt: LocalDateTime? = null,
     var createdAt: LocalDateTime? = null,

@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.javatime.datetime
 object AccountDatabase: Table("account") {
     var uuid = uuid("uuid").uniqueIndex()
     var name = varchar("name", 100)
-    var balance = decimal("balance", 9, 2)
+    var balance = double("balance")
     var active = varchar("active?", 1)
     var modifiedAt = datetime("modified_at").defaultExpression(CurrentDateTime)
     var createdAt = datetime("created_at").defaultExpression(CurrentDateTime)
