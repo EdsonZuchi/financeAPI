@@ -26,7 +26,7 @@ class TransactionUseCaseImplementation(
                 }
                 if((transaction.typeTransaction == null) || (transaction.typeTransaction!!.uuid == null)){
                     return TransactionResponse()
-                }
+                }git
 
                 transaction.uuid = UUID.randomUUID()
                 TransactionResponse(transaction = transaction)
